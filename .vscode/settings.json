@@ -1,0 +1,18 @@
+{ 
+    "C_Cpp.default.includePath": ["/home/victor/development/sgdk200/inc",
+    "/home/victor/development/sgdk200/res",
+    "res",
+    "inc"
+],
+"files.associations": {
+    "game.h": "c",
+    "input.h": "c",
+    "timer.h": "c",
+    "timers.h": "c",
+    "genesis.h": "c",
+    "physics.h": "c",
+    "player.h": "c",
+    "level.h": "c",
+    "gfx.h": "c"
+}
+}
