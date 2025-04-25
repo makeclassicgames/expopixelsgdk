@@ -130,8 +130,6 @@ void draw(void)
 
         break;
     case GAME_STATE_MENU:
-      
-        VDP_drawText("MENU    ", 10, 13);
 
         break;
     case GAME_STATE_RUN:

@@ -13,6 +13,7 @@ void splash2TimerCallback(void);
 void initSplash1(Game*);
 void initSplash2(Game*);
 void initRUN(Game*);
+void initMenu(Game*);
 
 
 
@@ -33,6 +34,7 @@ void loadNextState(Game *game, GameState nextState)
         initSplash2(game);
         break;
     case GAME_STATE_MENU:
+        initMenu(game);
         /* code */
         break;
     case GAME_STATE_RUN:
@@ -74,6 +76,13 @@ void initRUN(Game * game){
         game->player.entity.position.y, TILE_ATTR(PAL1, TRUE, FALSE, FALSE)));
     PAL_setPalette(PAL1, joaq.palette->data,CPU);
     
+}
+
+void initMenu(Game* game){
+
+    PAL_fadeIn(0, 15, menu.palette->data, 30, TRUE);
+    VDP_drawImageEx(BG_A,&menu, TILE_ATTR_FULL(PAL0, FALSE, FALSE, FALSE, game->vram_index), 0, 0, FALSE, FALSE);
+
 }
 
 void updateGameRun(Game* game){

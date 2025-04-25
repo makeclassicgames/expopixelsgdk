@@ -4,6 +4,7 @@
 
 extern const Image logoBg;
 extern const Image logArc;
+extern const Image menu;
 extern const Image lvl1;
 extern const Image lvl1_2;
 extern const Image lvl1_3;

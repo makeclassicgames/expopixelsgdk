@@ -158,14 +158,14 @@ Level levels[MAX_LEVELS] = {
 };
 
 void loadScreen(u16 levelIndex, u16 screenIndex){
-    PAL_fadeIn(32, 47, levels[levelIndex].screens[screenIndex].foreground->palette->data, 30, TRUE);
     u16 index= TILE_USER_INDEX;
     if(levels[levelIndex].screens[screenIndex].background != NULL){
-        VDP_drawImageEx(BG_B, levels[levelIndex].screens[screenIndex].background, TILE_ATTR_FULL(PAL3, FALSE, FALSE, FALSE, index), 0, 0, TRUE, CPU);
-        index+= levels[levelIndex].screens[screenIndex].background->tileset->numTile;
+        VDP_drawImageEx(BG_B, &logoBg, TILE_ATTR_FULL(PAL3, FALSE, FALSE, FALSE, index), 0, 0, TRUE, CPU);
+        index += levels[levelIndex].screens[screenIndex].background->tileset->numTile;
     }
-    VDP_drawImageEx(BG_A, levels[levelIndex].screens[screenIndex].foreground, TILE_ATTR_FULL(PAL2, TRUE, FALSE, FALSE, index), 0, 0, FALSE, CPU);
-    
+    VDP_drawImageEx(BG_A, levels[levelIndex].screens[screenIndex].foreground, TILE_ATTR_FULL(PAL2, FALSE, FALSE, FALSE, index), 0, 0, FALSE, CPU);
+    PAL_fadeIn(32, 47, levels[levelIndex].screens[screenIndex].foreground->palette->data, 30, TRUE);
+
     
 
 
