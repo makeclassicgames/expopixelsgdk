@@ -6,6 +6,7 @@
 #include "input.h"
 #include "player.h"
 #include "level.h"
+#include "enemy.h"
 
 #define MAX_LEVELS 4
 
@@ -41,6 +42,8 @@ typedef struct game
     u16 vram_index;
     u8 levelIndex;
     u8 screenIndex;
+    Enemy enemy;
+   
 }Game;
 
 void loadNextState(Game *, GameState);

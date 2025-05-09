@@ -5,6 +5,7 @@
 
 #define JUMP_FORCE 8
 #define GRAVITY 1
+#define MAX_VELOCITY 8
 
 typedef struct{
     s16 x;

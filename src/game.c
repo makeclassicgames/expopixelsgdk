@@ -6,9 +6,12 @@
 
 Timer splash1timer;
 Timer splash2timer;
+Timer enemyTimer;
 
 void splash1TimerCallback(void);
 void splash2TimerCallback(void);
+void enemyTimerCallback(void);
+
 
 void initSplash1(Game*);
 void initSplash2(Game*);
@@ -72,10 +75,16 @@ void initRUN(Game * game){
     loadScreen(game->levelIndex, game->screenIndex);
     Screen * currentScreen = getScreen(game->levelIndex, game->screenIndex);
     PLYR_setPosition(&game->player, currentScreen->initial_position.x, currentScreen->initial_position.y);
-    PLYR_setSprite(&game->player,SPR_addSprite(&joaq, game->player.entity.position.x, 
-        game->player.entity.position.y, TILE_ATTR(PAL1, TRUE, FALSE, FALSE)));
+    PLYR_setSprite(&game->player,
+        SPR_addSprite(&joaq, 400, 100, 
+         TILE_ATTR(PAL1, TRUE, FALSE, FALSE)));
     PAL_setPalette(PAL1, joaq.palette->data,CPU);
-    
+    ENEMY_init(&game->enemy,150, 100);
+    game->enemy.sprite = SPR_addSprite(&esq, 150, 100, 
+         TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
+    PAL_setPalette(PAL0, esq.palette->data,CPU);
+    timer_init(&enemyTimer, 2, TRUE, enemyTimerCallback);
+    timer_start(&enemyTimer);
 }
 
 void initMenu(Game* game){
@@ -87,6 +96,8 @@ void initMenu(Game* game){
 
 void updateGameRun(Game* game){
     PLYR_updateRun(&game->player, &game->inputState,game->levelIndex, game->screenIndex);
+    ENEMY_update(&game->enemy);
+    timer_update(&enemyTimer);
 }
 
 void updateSplash1(Game* game){
@@ -100,5 +111,6 @@ void updateSplash2(Game* game){
 void drawGameRun(Game * game){
     SPR_setPosition(game->player.sprite, game->player.entity.position.x, game->player.entity.position.y);
     SPR_setAnim(game->player.sprite, game->player.direction);
+    ENEMY_draw(&game->enemy);
 }
 

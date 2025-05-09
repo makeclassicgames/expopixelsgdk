@@ -29,6 +29,11 @@ void splash1TimerCallback(void)
     
 }
 
+void enemyTimerCallback(void)
+{
+    game.enemy.direction = !game.enemy.direction;
+}
+
 
 
 int main()
@@ -49,7 +54,7 @@ void init(void)
 {
     input_init(&game.inputState);
     SPR_init();
-    loadNextState(&game, GAME_STATE_SPLASH1);
+    loadNextState(&game, GAME_STATE_RUN);
     game.vram_index = TILE_USER_INDEX;
     game.levelIndex = 0;
     game.screenIndex = 0;
