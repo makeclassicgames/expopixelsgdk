@@ -27,4 +27,7 @@ void ENTITY_setPosition2D(Entity *, Vector2D );
 void ENTITY_setVelocity2D(Entity *, Vector2D );
 void ENTITY_update(Entity *, s16 );
 
+bool ENTITY_isOnFloor(Entity *, u8 , u8 );
+bool ENTITY_isCeilling(Entity *, u8 , u8 );
+
 #endif

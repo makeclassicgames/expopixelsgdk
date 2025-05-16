@@ -1,4 +1,5 @@
 #include "enemy.h"
+#include "physics.h"
 
 
 
@@ -25,10 +26,28 @@ void ENEMY_setSprite(Enemy *enemy, Sprite *sprite)
     enemy->sprite = sprite;
 }
 
-void ENEMY_update(Enemy *enemy)
+void ENEMY_update(Enemy *enemy,u8 levelIndex, u8 screenIndex)
 {
    
-    
+    if(enemy->entity.velocity.y < MAX_VELOCITY)
+    {
+        enemy->entity.velocity.y += GRAVITY;
+    }
+    if(ENTITY_isOnFloor(&enemy->entity, levelIndex, screenIndex))
+    {
+        enemy->entity.velocity.y = 0;
+    }
+    if(enemy->direction == ENEMY_DIR_LEFT 
+        && !ENTITY_isCeilling(&enemy->entity, levelIndex, screenIndex))
+    {
+        enemy->entity.velocity.x = -1;
+    }
+    else if(enemy->direction == ENEMY_DIR_RIGHT 
+        && !ENTITY_isCeilling(&enemy->entity, levelIndex, screenIndex))
+    {
+        enemy->entity.velocity.x = 1;
+    }
+  
     ENTITY_update(&enemy->entity, 1);
 }
 

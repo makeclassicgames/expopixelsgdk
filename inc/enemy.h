@@ -23,7 +23,7 @@ void ENEMY_init(Enemy *, u8 , u8 );
 void ENEMY_setPosition(Enemy *enemy, s16 x, s16 y);
 void ENEMY_setVelocity(Enemy *enemy, s16 vx, s16 vy);
 void ENEMY_setSprite(Enemy *enemy, Sprite *sprite);
-void ENEMY_update(Enemy *enemy);
+void ENEMY_update(Enemy *enemy,u8,u8);
 void ENEMY_draw(Enemy *enemy);
 
 #endif

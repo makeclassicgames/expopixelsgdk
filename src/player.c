@@ -4,26 +4,26 @@
 
 bool is_onfloor(Player *player, u8 levelIndex, u8 screenIndex)
 {
-    u16 x = player->entity.position.x / 8;
+   /*  u16 x = player->entity.position.x / 8;
     u16 y = player->entity.position.y / 8;
 
-    u16 tile = getScreen(levelIndex,screenIndex)->collision_map[(y+4) * 40 + (x+1)];
+    u16 tile = getScreen(levelIndex,screenIndex)->collision_map[(y+4) * 40 + (x+1)]; */
     // Check if the player is on the floor
-    return tile!=13;
+    return ENTITY_isOnFloor(&player->entity, levelIndex, screenIndex);
 }
 
 bool is_ceilling(Player *player,u8 levelIndex, u8 screenIndex)
 {
-    u16 x = player->entity.position.x / 8;
+    /* u16 x = player->entity.position.x / 8;
     u16 y = player->entity.position.y / 8;
     if(player->direction==DIR_RIGHT){
         x+=2;
     }else if(player->direction==DIR_LEFT){
         x++;
     }
-    u16 tile = getScreen(levelIndex,screenIndex)->collision_map[(y+1) * 40 + (x)];
+    u16 tile = getScreen(levelIndex,screenIndex)->collision_map[(y+1) * 40 + (x)]; */
     // Check if the player is ceilling a tile
-    return tile!=13;
+    return ENTITY_isCeilling(&player->entity, levelIndex, screenIndex);
 }
 
 void PLYR_init(Player *player)
@@ -56,8 +56,10 @@ void PLYR_updateRun(Player *player, Input *input, u8 levelIndex, u8 screenIndex)
 {
     
 
-    
-    player->entity.velocity.y += GRAVITY;
+    if(player->entity.velocity.y < MAX_VELOCITY){
+        player->entity.velocity.y += GRAVITY;
+    }
+   
     if(is_onfloor(player,levelIndex,screenIndex)){
         player->entity.velocity.y = 0;
     }

@@ -81,8 +81,8 @@ void initRUN(Game * game){
     PAL_setPalette(PAL1, joaq.palette->data,CPU);
     ENEMY_init(&game->enemy,150, 100);
     game->enemy.sprite = SPR_addSprite(&esq, 150, 100, 
-         TILE_ATTR(PAL0, TRUE, FALSE, FALSE));
-    PAL_setPalette(PAL0, esq.palette->data,CPU);
+         TILE_ATTR(PAL3, TRUE, FALSE, FALSE));
+    PAL_setPalette(PAL3, esq.palette->data,CPU);
     timer_init(&enemyTimer, 2, TRUE, enemyTimerCallback);
     timer_start(&enemyTimer);
 }
@@ -96,7 +96,7 @@ void initMenu(Game* game){
 
 void updateGameRun(Game* game){
     PLYR_updateRun(&game->player, &game->inputState,game->levelIndex, game->screenIndex);
-    ENEMY_update(&game->enemy);
+    ENEMY_update(&game->enemy, game->levelIndex, game->screenIndex);
     timer_update(&enemyTimer);
 }
 

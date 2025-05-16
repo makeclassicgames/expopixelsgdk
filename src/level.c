@@ -161,7 +161,7 @@ void loadScreen(u16 levelIndex, u16 screenIndex){
     u16 index= TILE_USER_INDEX;
     if(levels[levelIndex].screens[screenIndex].background != NULL){
         VDP_drawImageEx(BG_B, levels[levelIndex].screens[screenIndex].background 
-            , TILE_ATTR_FULL(PAL3, FALSE, FALSE, FALSE, index), 0, 0, TRUE, CPU);
+            , TILE_ATTR_FULL(PAL0, FALSE, FALSE, FALSE, index), 0, 0, TRUE, CPU);
         index += levels[levelIndex].screens[screenIndex].background->tileset->numTile;
     }
     
