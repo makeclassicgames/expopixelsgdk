@@ -9,5 +9,9 @@ extern const Image lvl1;
 extern const Image lvl1_2;
 extern const Image lvl1_3;
 extern const Image lvl1_4;
+extern const Image fondo;
+extern const Image cueva1;
+extern const Image cueva2;
+extern const Image cueva3;
 
 #endif // _RES_GFX_H_
