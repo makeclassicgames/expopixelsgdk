@@ -54,7 +54,7 @@ void init(void)
 {
     input_init(&game.inputState);
     SPR_init();
-    loadNextState(&game, GAME_STATE_RUN);
+    loadNextState(&game, GAME_STATE_SPLASH1);
     game.vram_index = TILE_USER_INDEX;
     game.levelIndex = 0;
     game.screenIndex = 0;
