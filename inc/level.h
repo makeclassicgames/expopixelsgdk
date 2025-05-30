@@ -5,6 +5,8 @@
 
 #define SCREENS_PER_LEVEL 4
 
+#define COLLISION_TILE 14
+
 typedef struct{
     u16* collision_map;
     const Image* background;
