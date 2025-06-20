@@ -31,7 +31,10 @@ void splash1TimerCallback(void)
 
 void enemyTimerCallback(void)
 {
-    game.enemy.direction = !game.enemy.direction;
+    for(int i= 0; i < game.enemiesCount; i++)
+    {
+        game.enemies[i].direction = !game.enemies[i].direction;
+    }
 }
 
 
@@ -54,7 +57,7 @@ void init(void)
 {
     input_init(&game.inputState);
     SPR_init();
-    loadNextState(&game, GAME_STATE_RUN);
+    loadNextState(&game, GAME_STATE_SPLASH1);
     game.vram_index = TILE_USER_INDEX;
     game.levelIndex = 0;
     game.screenIndex = 0;
@@ -107,12 +110,14 @@ void update(void)
                 Screen * currentScreen = getScreen(game.levelIndex, game.screenIndex);
                 PLYR_setPosition(&game.player, currentScreen->initial_position.x, currentScreen->initial_position.y);
                 game.inputState.values[INPUT_START] = FALSE;
+                loadEnemies(&game);
         }
         break;
     case GAME_STATE_END:
         // Handle game over logic
         if (is_button_pressed(&game.inputState, INPUT_START))
         {
+            
             loadNextState(&game, GAME_STATE_SPLASH1);
             game.inputState.values[INPUT_START] = FALSE;
         }

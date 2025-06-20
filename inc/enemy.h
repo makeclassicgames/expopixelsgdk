@@ -12,6 +12,7 @@ typedef struct{
     Sprite * sprite;
     u8 direction;
     u8 status;
+    u8 loaded;
 }Enemy;
 
 enum ENEMY_DIR{

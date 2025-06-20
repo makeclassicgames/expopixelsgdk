@@ -56,3 +56,13 @@ bool ENTITY_isCeilling(Entity *entity, u8 levelIndex, u8 screenIndex)
         || collision_map[((y+2) * 40) + x] ==COLLISION_TILE
         || collision_map[((y+3) * 40) + x] ==COLLISION_TILE;
 }
+
+bool ENTITY_isOnBorder(Entity *entity, u8 levelIndex, u8 screenIndex){
+    // Check if the entity is on the left or right border
+    Screen *screen = getScreen(levelIndex, screenIndex);
+    u16 *collision_map = screen->collision_map;
+    s16 x = entity->position.x / 8;
+    s16 y = entity->position.y / 8; // Check the tile to the left and right of the entity
+    return collision_map[(y+4) * 40 + (x)] == COLLISION_TILE 
+        || collision_map[(y+4) * 40 + (x+2)] == COLLISION_TILE;
+}

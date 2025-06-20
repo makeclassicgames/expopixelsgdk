@@ -10,6 +10,11 @@
 typedef struct{
     s16 x;
     s16 y;
+} Point2D;
+
+typedef struct{
+    s16 x;
+    s16 y;
 } Vector2D;
 
 
@@ -29,5 +34,6 @@ void ENTITY_update(Entity *, s16 );
 
 bool ENTITY_isOnFloor(Entity *, u8 , u8 );
 bool ENTITY_isCeilling(Entity *, u8 , u8 );
+bool ENTITY_isOnBorder(Entity *entity, u8 levelIndex, u8 screenIndex);
 
 #endif

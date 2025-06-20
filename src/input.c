@@ -7,6 +7,7 @@ void input_init(Input *input)
     {
         input->values[i] = FALSE;
     }
+    JOY_setSupport(PORT_1,JOY_SUPPORT_3BTN|JOY_SUPPORT_6BTN);
     JOY_init();
     JOY_setEventHandler(inputEventHandler);
 }

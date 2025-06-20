@@ -8,6 +8,8 @@ Timer splash1timer;
 Timer splash2timer;
 Timer enemyTimer;
 
+Sprite * fireflySprite;
+
 void splash1TimerCallback(void);
 void splash2TimerCallback(void);
 void enemyTimerCallback(void);
@@ -18,6 +20,7 @@ void initSplash2(Game*);
 void initRUN(Game*);
 void initMenu(Game*);
 
+void loadEnemies(Game *game);
 
 
 
@@ -79,9 +82,14 @@ void initRUN(Game * game){
         SPR_addSprite(&joaq, 400, 100, 
          TILE_ATTR(PAL1, TRUE, FALSE, FALSE)));
     PAL_setPalette(PAL1, joaq.palette->data,CPU);
-    ENEMY_init(&game->enemy,150, 100);
-    game->enemy.sprite = SPR_addSprite(&esq, 150, 100, 
-         TILE_ATTR(PAL3, TRUE, FALSE, FALSE));
+    for(int i = 0; i < 10; i++)
+    {
+        game->enemies[i].loaded = FALSE;
+        game->enemies[i].status = 1;
+        game->enemies[i].direction = ENEMY_DIR_LEFT;
+    }
+    fireflySprite = SPR_addSprite(&firefly, 16, 40, TILE_ATTR(PAL3, TRUE, FALSE, FALSE));
+    loadEnemies(game);
     PAL_setPalette(PAL3, esq.palette->data,CPU);
     timer_init(&enemyTimer, 2, TRUE, enemyTimerCallback);
     timer_start(&enemyTimer);
@@ -96,7 +104,9 @@ void initMenu(Game* game){
 
 void updateGameRun(Game* game){
     PLYR_updateRun(&game->player, &game->inputState,game->levelIndex, game->screenIndex);
-    ENEMY_update(&game->enemy, game->levelIndex, game->screenIndex);
+    for(int i= 0; i < game->enemiesCount; i++){
+        ENEMY_update(&game->enemies[i], game->levelIndex, game->screenIndex);
+    }
     timer_update(&enemyTimer);
 }
 
@@ -111,6 +121,28 @@ void updateSplash2(Game* game){
 void drawGameRun(Game * game){
     SPR_setPosition(game->player.sprite, game->player.entity.position.x, game->player.entity.position.y);
     SPR_setAnim(game->player.sprite, game->player.direction);
-    ENEMY_draw(&game->enemy);
+    for (u8 i = 0; i < game->enemiesCount; i++) {
+        ENEMY_draw(&game->enemies[i]);
+    }
 }
 
+
+void loadEnemies(Game *game){
+    Screen *currentScreen = getScreen(game->levelIndex, game->screenIndex);
+    game->enemiesCount = currentScreen->enemiesCount;
+    
+    for (u8 i = 0; i < game->enemiesCount; i++) {
+        ENEMY_init(&game->enemies[i], currentScreen->enemiesPosition[i].x, currentScreen->enemiesPosition[i].y);
+
+        if(game->enemies[i].loaded)
+        {
+            ENEMY_setPosition(&game->enemies[i],currentScreen->enemiesPosition[i].x, currentScreen->enemiesPosition[i].y); // Skip if already loaded
+        }else{
+             game->enemies[i].sprite = SPR_addSprite(&esq, currentScreen->enemiesPosition[i].x, currentScreen->enemiesPosition[i].y, 
+            TILE_ATTR(PAL3, TRUE, FALSE, FALSE));
+        }
+       
+        PAL_setPalette(PAL3, esq.palette->data, CPU);
+        game->enemies[i].loaded = TRUE;    
+    }
+}

@@ -42,7 +42,8 @@ typedef struct game
     u16 vram_index;
     u8 levelIndex;
     u8 screenIndex;
-    Enemy enemy;
+    Enemy enemies[10];
+    u8 enemiesCount; // Number of enemies in the current screen
    
 }Game;
 

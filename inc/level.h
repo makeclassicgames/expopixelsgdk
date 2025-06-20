@@ -15,6 +15,12 @@ typedef struct{
         s16 x;
         s16 y;
     }initial_position;
+    struct{
+        s16 x;
+        s16 y;
+    } enemiesPosition[10]; // Example for enemies, adjust as needed
+    u16 enemiesCount; // Number of enemies in this screen
+
 }Screen;
 
 typedef struct{

@@ -47,6 +47,12 @@ void ENEMY_update(Enemy *enemy,u8 levelIndex, u8 screenIndex)
     {
         enemy->entity.velocity.x = 1;
     }
+
+  /*   if(ENTITY_isOnBorder(&enemy->entity, levelIndex, screenIndex))
+    {
+        enemy->direction = (enemy->direction == ENEMY_DIR_LEFT) ? ENEMY_DIR_RIGHT : ENEMY_DIR_LEFT;
+        enemy->entity.velocity.x = 0;
+    } */
   
     ENTITY_update(&enemy->entity, 1);
 }
