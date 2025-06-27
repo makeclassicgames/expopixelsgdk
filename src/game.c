@@ -20,6 +20,9 @@ void initSplash2(Game*);
 void initRUN(Game*);
 void initMenu(Game*);
 
+void loadNextGame(Game  *game);
+void loadPreviousGame(Game *game);
+
 void loadEnemies(Game *game);
 
 
@@ -108,6 +111,48 @@ void updateGameRun(Game* game){
         ENEMY_update(&game->enemies[i], game->levelIndex, game->screenIndex);
     }
     timer_update(&enemyTimer);
+
+    if(game->player.entity.position.x>290){
+        loadNextGame(game);
+    }
+
+    if(game->screenIndex!=0 && game->player.entity.position.x < 8)
+    {
+        loadPreviousGame(game);
+    }
+}
+
+void loadNextGame(Game  *game){
+    PAL_fadeOut(32, 47, 16, FALSE);
+    game->screenIndex++;
+    if(game->screenIndex >= 5)
+    {
+        game->screenIndex = 0;
+        game->levelIndex++;
+        if(game->levelIndex >= MAX_LEVELS)
+        {
+            game->levelIndex = 0;
+        }
+    }
+    loadScreen(game->levelIndex, game->screenIndex);
+    Screen * currentScreen = getScreen(game->levelIndex, game->screenIndex);
+    PLYR_setPosition(&game->player, currentScreen->initial_position.x, currentScreen->initial_position.y);
+    loadEnemies(game);
+}
+
+void loadPreviousGame(Game  *game){
+    PAL_fadeOut(32, 47, 16, FALSE);
+    game->screenIndex--;
+    if(game->levelIndex != 0)
+    {
+       
+        game->levelIndex--;
+      
+    }
+    loadScreen(game->levelIndex, game->screenIndex);
+    Screen * currentScreen = getScreen(game->levelIndex, game->screenIndex);
+    PLYR_setPosition(&game->player, currentScreen->initial_position.x, currentScreen->initial_position.y);
+    loadEnemies(game);
 }
 
 void updateSplash1(Game* game){
@@ -136,6 +181,7 @@ void loadEnemies(Game *game){
 
         if(game->enemies[i].loaded)
         {
+            ENEMY_setEnabled(&game->enemies[i], TRUE);
             ENEMY_setPosition(&game->enemies[i],currentScreen->enemiesPosition[i].x, currentScreen->enemiesPosition[i].y); // Skip if already loaded
         }else{
              game->enemies[i].sprite = SPR_addSprite(&esq, currentScreen->enemiesPosition[i].x, currentScreen->enemiesPosition[i].y, 

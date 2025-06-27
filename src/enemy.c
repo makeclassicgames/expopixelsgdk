@@ -11,6 +11,7 @@ void ENEMY_init(Enemy *enemy, u8 x, u8 y)
     enemy->entity.velocity.y = 0;
     enemy->direction = ENEMY_DIR_LEFT;
     enemy->status = 1;
+    enemy->entity.enabled = TRUE;
    
 }
 void ENEMY_setPosition(Enemy *enemy, s16 x, s16 y)
@@ -32,6 +33,14 @@ void ENEMY_update(Enemy *enemy,u8 levelIndex, u8 screenIndex)
     if(enemy->entity.velocity.y < MAX_VELOCITY)
     {
         enemy->entity.velocity.y += GRAVITY;
+    }
+    if(enemy->entity.position.y> 240)
+    {
+        ENEMY_setEnabled(enemy, FALSE);
+    }
+    if(enemy->entity.position.x < -32 || enemy->entity.position.x > 320)
+    {
+        ENEMY_setEnabled(enemy, FALSE);
     }
     if(ENTITY_isOnFloor(&enemy->entity, levelIndex, screenIndex))
     {
@@ -61,4 +70,12 @@ void ENEMY_draw(Enemy *enemy)
 {
     SPR_setPosition(enemy->sprite, enemy->entity.position.x, enemy->entity.position.y);
     SPR_setHFlip(enemy->sprite, enemy->direction);
+}
+
+void ENEMY_setEnabled(Enemy *enemy, u8 enabled)
+{
+    enemy->entity.enabled = enabled;
+    if (enemy->sprite) {
+        SPR_setVisibility(enemy->sprite, enabled ? VISIBLE : HIDDEN);
+    }
 }

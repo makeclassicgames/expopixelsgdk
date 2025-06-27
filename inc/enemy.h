@@ -26,5 +26,7 @@ void ENEMY_setVelocity(Enemy *enemy, s16 vx, s16 vy);
 void ENEMY_setSprite(Enemy *enemy, Sprite *sprite);
 void ENEMY_update(Enemy *enemy,u8,u8);
 void ENEMY_draw(Enemy *enemy);
+void ENEMY_setEnabled(Enemy *enemy, u8 enabled);
+
 
 #endif

@@ -21,7 +21,7 @@ typedef struct{
 typedef struct{
     Vector2D position;
     Vector2D velocity;
-
+    u8 enabled;
 } Entity;
 
 

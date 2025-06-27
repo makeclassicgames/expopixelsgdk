@@ -57,7 +57,7 @@ void init(void)
 {
     input_init(&game.inputState);
     SPR_init();
-    loadNextState(&game, GAME_STATE_SPLASH1);
+    loadNextState(&game, GAME_STATE_RUN);
     game.vram_index = TILE_USER_INDEX;
     game.levelIndex = 0;
     game.screenIndex = 0;
@@ -91,27 +91,8 @@ void update(void)
         //Update sprite position
         updateGameRun(&game);
        
-        // Handle gameplay logic
-        if (is_button_pressed(&game.inputState, INPUT_START))
-        {
-            
-                PAL_fadeOut(32, 47, 16, FALSE);
-                game.screenIndex++;
-                if(game.screenIndex >= 5)
-                {
-                    game.screenIndex = 0;
-                    game.levelIndex++;
-                    if(game.levelIndex >= MAX_LEVELS)
-                    {
-                        game.levelIndex = 0;
-                    }
-                }
-                loadScreen(game.levelIndex, game.screenIndex);
-                Screen * currentScreen = getScreen(game.levelIndex, game.screenIndex);
-                PLYR_setPosition(&game.player, currentScreen->initial_position.x, currentScreen->initial_position.y);
-                game.inputState.values[INPUT_START] = FALSE;
-                loadEnemies(&game);
-        }
+        
+     
         break;
     case GAME_STATE_END:
         // Handle game over logic
