@@ -61,6 +61,7 @@ void init(void)
     game.vram_index = TILE_USER_INDEX;
     game.levelIndex = 0;
     game.screenIndex = 0;
+   
 
 }
 

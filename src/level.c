@@ -237,7 +237,7 @@ Level levels[MAX_LEVELS] = {
                 .collision_map = collision_map_cueva2,
                 .background = NULL,
                 .foreground = &cueva2,
-                .initial_position = {8, 180},
+                .initial_position = {8, 172},
                 .enemiesCount=2,
                 .enemiesPosition={
                     {125, 120},
@@ -248,7 +248,7 @@ Level levels[MAX_LEVELS] = {
                 .collision_map = collision_map_cueva3,
                 .background = NULL,
                 .foreground = &cueva3,
-                .initial_position = {288, 180},
+                .initial_position = {16, 88},
                 .enemiesCount=2,
                 .enemiesPosition={
                     {125, 120},
@@ -259,7 +259,7 @@ Level levels[MAX_LEVELS] = {
                 .collision_map = collision_map_1_4,
                 .background = NULL,
                 .foreground = &lvl1_4,
-                .initial_position = {288, 96},
+                .initial_position = {16, 80},
                 .enemiesCount=2,
                 .enemiesPosition={
                     {125, 120},

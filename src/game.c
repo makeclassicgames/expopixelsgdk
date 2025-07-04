@@ -8,7 +8,6 @@ Timer splash1timer;
 Timer splash2timer;
 Timer enemyTimer;
 
-Sprite * fireflySprite;
 
 void splash1TimerCallback(void);
 void splash2TimerCallback(void);
@@ -24,6 +23,8 @@ void loadNextGame(Game  *game);
 void loadPreviousGame(Game *game);
 
 void loadEnemies(Game *game);
+
+void showHUD(Game *game);
 
 
 
@@ -91,7 +92,6 @@ void initRUN(Game * game){
         game->enemies[i].status = 1;
         game->enemies[i].direction = ENEMY_DIR_LEFT;
     }
-    fireflySprite = SPR_addSprite(&firefly, 16, 40, TILE_ATTR(PAL3, TRUE, FALSE, FALSE));
     loadEnemies(game);
     PAL_setPalette(PAL3, esq.palette->data,CPU);
     timer_init(&enemyTimer, 2, TRUE, enemyTimerCallback);
@@ -164,11 +164,13 @@ void updateSplash2(Game* game){
 }
 
 void drawGameRun(Game * game){
+    
     SPR_setPosition(game->player.sprite, game->player.entity.position.x, game->player.entity.position.y);
     SPR_setAnim(game->player.sprite, game->player.direction);
     for (u8 i = 0; i < game->enemiesCount; i++) {
         ENEMY_draw(&game->enemies[i]);
     }
+    showHUD(game);
 }
 
 
@@ -191,4 +193,18 @@ void loadEnemies(Game *game){
         PAL_setPalette(PAL3, esq.palette->data, CPU);
         game->enemies[i].loaded = TRUE;    
     }
+}
+
+
+void showHUD(Game *game){
+    //VDP_drawTextBG(BG_A,"Score: 000000", 2,1);
+    VDP_drawTextEx(BG_A,"Score: 000000", TILE_ATTR(PAL2, FALSE, FALSE, FALSE), 2, 1, CPU);
+    char buffer[3];
+    sprintf(buffer, "Lives: %d", game->player.lives);
+    VDP_drawTextEx(BG_A,buffer, TILE_ATTR(PAL2, FALSE, FALSE, FALSE), 2,3,CPU);
+    VDP_drawTextEx(BG_A,"World", TILE_ATTR(PAL2, FALSE, FALSE, FALSE), 20,1,CPU);
+
+    char bufferWorld[20];
+    sprintf(bufferWorld, "%d-%d", game->levelIndex + 1, game->screenIndex + 1);
+    VDP_drawTextEx(BG_A,bufferWorld, TILE_ATTR(PAL2, FALSE, FALSE, FALSE), 21,3,CPU);
 }
